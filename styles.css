@@ -1,0 +1,81 @@
+/* Reset and base styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, teal, rgb(203, 195, 227));
+  color: #333;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Title */
+h1 {
+  font-size: 50px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+/* Scoreboard */
+#scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+#scoreboard p {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Buttons */
+button {
+  background-color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Results */
+#results {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Reset button */
+#reset {
+  display: none;
+  background-color: #ff5e5e;
+  border-color: #ff5e5e;
+  color: white;
+}
+
+#reset:hover {
+  background-color: #e04e4e;
+}

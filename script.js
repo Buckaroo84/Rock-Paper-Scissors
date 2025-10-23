@@ -1,37 +1,79 @@
-alert('Rock, Paper, Scissors!')
+document.addEventListener('DOMContentLoaded', () => {
+    let playerScore = 0;
+    let computerScore = 0;
 
-function getComputerChoice() {
-    const choices = ['rock', 'paper', 'scissors'];
-    const randomIndex = Math.floor(Math.random() * choices.length);
-    return choices[randomIndex];
-}
+    const resultsDiv = document.getElementById('results');
+    const playerScoreSpan = document.getElementById('player-score');
+    const computerScoreSpan = document.getElementById('computer-score');
+    const resetButton = document.getElementById('reset');
 
-function getPlayerChoice() {
-    let choice = prompt("Choose Rock, Paper, or Scissors:").toLowerCase();
-    return choice;
-}
-
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection === computerSelection) {
-        return "It's a tie!";
-    } else if (
-    (playerSelection === 'rock' && computerSelection === 'scissors') ||
-    (playerSelection === 'paper' && computerSelection === 'rock') ||
-    (playerSelection === 'scissors' && computerSelection === 'paper')
-    ) {
-        return `You Win! ${playerSelection} beats ${computerSelection}.`;
-    } else {
-        return `You lose! ${computerSelection} beats ${playerSelection}.`;
+    function getComputerChoice() {
+        const choices = ['rock', 'paper', 'scissors'];
+        return choices[Math.floor(Math.random() * choices.length)];
     }
-}
 
-    function game() {
-        for (let i = 0; i < 5; i++) {
-            const playerSelection = getPlayerChoice();
-            const computerSelection = getComputerChoice();
-            console.log(`Round ${i + 1}:`);
-            console.log(playRound(playerSelection, computerSelection));
+    function playRound(playerSelection) {
+        const computerSelection = getComputerChoice();
+        let result = '';
+
+        if (playerSelection === computerSelection) {
+            result = "It's a tie!";
+        } else if (
+        (playerSelection === 'rock' && computerSelection === 'scissors') ||
+        (playerSelection === 'paper' && computerSelection === 'rock') ||
+        (playerSelection === 'scissors' && computerSelection === 'paper')
+        ) {
+            playerScore++;
+            result = `You Win! ${playerSelection} beats ${computerSelection}.`;
+        } else {
+            computerScore++;
+            result = `You lose! ${computerSelection} beats ${playerSelection}.`;
+        }
+
+        updateResults(result);
+        checkWinner();
+    }
+
+    function updateResults(message) {
+        resultsDiv.innerHTML = `<p>${message}</p>`;
+        playerScoreSpan.textContent = playerScore;
+        computerScoreSpan.textContent = computerScore;
+    }
+
+    function checkWinner() {
+        if (playerScore === 5 || computerScore === 5) {
+            const winner = playerScore === 5 ? 'You win the game!' : 'Computer wins the game!';
+            resultsDiv.innerHTML += `<p><strong>${winner}</strong></p>`;
+            disableButtons();
+            resetButton.style.display = 'inline-block';
         }
     }
 
-    game();
+    function disableButtons() {
+        document.getElementById('rock').disabled = true;
+        document.getElementById('paper').disabled = true;
+        document.getElementById('scissors').disabled = true;
+    }
+
+    function enableButtons() {
+        document.getElementById('rock').disabled = false;
+        document.getElementById('paper').disabled = false;
+        document.getElementById('scissors').disabled = false;
+    }
+
+    function resetGame() {
+        playerScore = 0;
+        computerScore = 0;
+        playerScoreSpan.textContent = '0';
+        computerScoreSpan.textContent = '0';
+        resultsDiv.innerHTML = '';
+        enableButtons();
+        resetButton.style.display = 'none';
+    }
+
+    document.getElementById('rock').addEventListener('click', () => playRound('rock'));
+    document.getElementById('paper').addEventListener('click', () => playRound('paper'));
+    document.getElementById('scissors').addEventListener('click', () => playRound('scissors'));
+    resetButton.addEventListener('click', resetGame);
+});
+
